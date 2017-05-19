@@ -1,0 +1,36 @@
+nav {
+  height: 58px;
+  margin-top: -58px;
+  margin-bottom: 0;
+  width: 100%;
+  background-color: #669999;
+  border-bottom: 1px solid #ebecee;
+  >span{
+    vertical-align: middle;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 50px;
+    color: #fff;
+    line-height: 50px;
+  }
+  >div{
+    font-size: 16px;
+    color: #fff;
+    line-height: 56px;
+    span{
+      vertical-align: middle;
+    }
+    .aic-nav-logout{
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: url(../../images/exit.png) no-repeat center;
+      white-space: nowrap;
+      letter-spacing: -1em;
+      text-indent: -99em;
+      color: transparent;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+  }
+}
