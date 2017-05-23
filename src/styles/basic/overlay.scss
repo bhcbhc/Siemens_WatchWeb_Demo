@@ -1,0 +1,22 @@
+#monitor {
+  text-decoration: none;
+  color: #4addff;
+  font-size: 11pt;
+  font-weight: bold;
+  text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+#marker {
+  width: 30px;
+  height: 30px;
+  background: url("../../images/siemens/intersections.png") no-repeat;
+  opacity: 0.5;
+}
+
+#popup{
+  background-color: #8959ca;
+}
+
+.popover-content {
+  min-width: 180px;
+}

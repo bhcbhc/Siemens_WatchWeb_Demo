@@ -11,6 +11,12 @@
     <!-- CSS for bootstrap-->
     <link rel="stylesheet" type="text/css" href="src/libs/bootstrap-3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="src/libs/bootstrap-3.3.7/css/bootstrap-theme.min.css"/>
+    <!--kendo-->
+    <link rel="stylesheet" href="src/styles/kendo/kendo.common.min.css" type="text/css"/>
+    <link rel="stylesheet" href="src/styles/kendo/kendo.rtl.min.css" type="text/css"/>
+    <link rel="stylesheet" href="src/styles/kendo/kendo.default.min.css" type="text/css"/>
+    <link rel="stylesheet" href="src/styles/kendo/kendo.dataviz.min.css" type="text/css"/>
+    <link rel="stylesheet" href="src/styles/kendo/kendo.dataviz.default.min.css" type="text/css"/>
 
     <!--CSS for Openlayers-->
     <link rel="stylesheet" type="text/css" href="src/libs/openlayersv-4.1.1/ol.css"/>
@@ -19,22 +25,35 @@
     <link rel="stylesheet" type="text/css" href="src/styles/normalize.css"/>
     <link rel="stylesheet" type="text/css" href="src/styles/app.css"/>
 
-    <link rel="stylesheet" type="text/css" href="src/styles/basic/navigator.css">
+    <link rel="stylesheet" type="text/css" href="src/styles/basic/navigator.css"/>
+    <link rel="stylesheet" href="src/styles/basic/overlay.css"/>
 </head>
 <body class="pt58">
 <nav>
     <span class="nav-header">Siemens | TMS 智能交通管理平台</span>
-    <div id="nav-toolbar" class="right mr50 full-height">
-        <span class="aic-nav-msg">欢迎您，Administrator</span>
-        <span>&nbsp;|&nbsp;</span>
-        <i class="aic-nav-logout" data-bind="click:exitBtnClick"></i>
-        <span data-bind="click:exitBtnClick">&nbsp;退出</span>
-    </div>
+        <div id="nav-toolbar" class="right  full-height">
+            <span class="aic-nav-msg">欢迎您，Administrator</span>
+            <span>&nbsp;|&nbsp;</span>
+            <i class="aic-nav-logout" data-bind="click:exitBtnClick"></i>
+            <span data-bind="click:exitBtnClick">&nbsp;退出</span>
+            <i class="glyphicon glyphicon-time"></i>
+            <span id="showTime">2017-05-22 14:24 星期一</span>
+            <div>
+                <button type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-home"></span>主页
+                </button>
+                <button type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-king"></span>修改密码
+                </button>
+                <button type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-eye-close"></span> User
+                </button>
+            </div>
+        </div>
 </nav>
 <div id="page-container" class="full-width full-height transition-all-05">
-    <div id="navigation" class="full-height left transition-all-05" >
+    <div id="navigation" class="full-height left transition-all-05">
         <div id="main-menu" class="inner full-height">
-            菜单栏
         </div>
     </div>
     <div id="hover-nav" class="full-height left" data-state="showed">
@@ -42,6 +61,12 @@
     </div>
     <div id="map-container" class="full-height left transition-all-05">
     </div>
+</div>
+<div style="display:none;">
+
+    <div id="marker" title="监控机"></div>
+    <!--Popup-->
+    <div id="popup" title="监控机"></div>
 </div>
 <div class="modal fade" id="login-modal" data-bind="events:{shown.bs.modal:modalShow}" tabindex="-1"
      role="alertdialog" aria-labelledby="loginModalLabel">
@@ -57,14 +82,14 @@
                         <span class="login-icon login-icon-user"></span>
                     </label>
                     <input type="text" class="login-input" data-bind="value:userName" autocomplete="off"
-                           maxlength="100" placeholder="用户名" required="required" />
+                           maxlength="100" placeholder="用户名" required="required"/>
                 </div>
                 <div class="login-form-item">
                     <label class="login-label">
                         <span class="login-icon login-icon-pwd"></span>
                     </label>
                     <input type="password" class="login-input" data-bind="value:password" autocomplete="off"
-                           maxlength="100" placeholder="密码" required="required" />
+                           maxlength="100" placeholder="密码" required="required"/>
                 </div>
             </div>
             <div class="modal-footer">
@@ -76,38 +101,8 @@
 </div> <!--login modal div-->
 <script src="src/libs/jquery/jquery-3.2.1.min.js"></script>
 <script src="src/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script src="src/libs/kendo/kendo.all.min.js"></script>
 <script src="src/libs/openlayersv-4.1.1/ol.js"></script>
 <script data-main="app.js" src="src/libs/require/r.js"></script>
-<script>
-    var map = new ol.Map({
-        layers: [
-            new ol.layer.Tile({
-                source: new ol.source.OSM()
-            })
-        ],
-        target: 'map-container',
-        controls: ol.control.defaults({
-            attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-                collapsible: false
-            })
-        }),
-        view: new ol.View({
-            center: [0, 0],
-            zoom: 2
-        })
-    });
-
-    document.getElementById('zoom-out').onclick = function() {
-        var view = map.getView();
-        var zoom = view.getZoom();
-        view.setZoom(zoom - 1);
-    };
-
-    document.getElementById('zoom-in').onclick = function() {
-        var view = map.getView();
-        var zoom = view.getZoom();
-        view.setZoom(zoom + 1);
-    };
-</script>
 </body>
 </html>

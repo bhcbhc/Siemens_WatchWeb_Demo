@@ -1,0 +1,92 @@
+{
+  "OEEDisplay": {
+    "text": "在线设备",
+    "id": 1,
+    "parent": 0
+  },
+  "DashBoard1": {
+    "text": "离线设备",
+    "id": 2,
+    "parent": 0
+  },
+  "DashBoard2": {
+    "text": "中心手控",
+    "id": 3,
+    "parent": 0
+  },
+  "DashBoard3": {
+    "text": "设备管理",
+    "id": 4,
+    "parent": 0
+  },
+  "DashBoard4": {
+    "text": "权限管理",
+    "id": 5,
+    "parent": 0
+  },
+  "DashBoard5": {
+    "text": "中心方案",
+    "id": 6,
+    "parent": 0
+  },
+  "online1": {
+    "text": "设备1",
+    "id": 7,
+    "parent": 1
+  },
+  "online2": {
+    "text": "设备2",
+    "id": 8,
+    "parent": 1
+  },
+  "online3": {
+    "text": "设备3",
+    "id": 9,
+    "parent": 1
+  },
+  "online4": {
+    "text": "设备4",
+    "id": 10,
+    "parent": 1
+  },
+  "offline1": {
+    "text": "设备3",
+    "id": 11,
+    "parent": 2
+  },
+  "offline1": {
+    "text": "设备3",
+    "id": 12,
+    "parent": 2
+  },
+  "offline2": {
+    "text": "设备3",
+    "id": 13,
+    "parent": 2
+  },
+  "offline3": {
+    "text": "设备3",
+    "id": 14,
+    "parent": 2
+  },
+  "others": {
+    "text": "其他",
+    "id": 15,
+    "parent": 0
+  },
+  "id1": {
+    "text": "1号机",
+    "id": 16,
+    "parent": 7
+  },
+  "id2": {
+    "text": "2号机",
+    "id": 17,
+    "parent": 7
+  },
+  "id3": {
+    "text": "3号机",
+    "id": 18,
+    "parent": 7
+  }
+}
