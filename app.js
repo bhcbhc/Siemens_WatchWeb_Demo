@@ -88,7 +88,7 @@ require(["init", "requestAsync", 'initWeb'], function (init, requestAsync, initW
             case 4:
                 formatedData.mode = "中心控制";
         }
-        if (data.online)
+        if (data.online) {
             formatedData.online = "在线";
         } else {
             formatedData.online = "离线";
