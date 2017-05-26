@@ -8,6 +8,8 @@
     <meta name="author" content="bhcbhc"/>
     <title>Siemens_TMS</title>
 
+    <!--CSS for Openlayers-->
+    <link rel="stylesheet" type="text/css" href="src/libs/openlayersv-4.1.1/ol.css"/>
     <!-- CSS for bootstrap-->
     <link rel="stylesheet" type="text/css" href="src/libs/bootstrap-3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="src/libs/bootstrap-3.3.7/css/bootstrap-theme.min.css"/>
@@ -17,10 +19,6 @@
     <link rel="stylesheet" href="src/styles/kendo/kendo.default.min.css" type="text/css"/>
     <link rel="stylesheet" href="src/styles/kendo/kendo.dataviz.min.css" type="text/css"/>
     <link rel="stylesheet" href="src/styles/kendo/kendo.dataviz.default.min.css" type="text/css"/>
-
-    <!--CSS for Openlayers-->
-    <link rel="stylesheet" type="text/css" href="src/libs/openlayersv-4.1.1/ol.css"/>
-
     <!--normalize-->
     <link rel="stylesheet" type="text/css" href="src/styles/normalize.css"/>
     <link rel="stylesheet" type="text/css" href="src/styles/app.css"/>
@@ -31,25 +29,25 @@
 <body class="pt58">
 <nav>
     <span class="nav-header">Siemens | TMS 智能交通管理平台</span>
-        <div id="nav-toolbar" class="right  full-height">
-            <span class="aic-nav-msg">欢迎您，Administrator</span>
-            <span>&nbsp;|&nbsp;</span>
-            <i class="aic-nav-logout" data-bind="click:exitBtnClick"></i>
-            <span data-bind="click:exitBtnClick">&nbsp;退出</span>
-            <i class="glyphicon glyphicon-time"></i>
-            <span id="showTime">2017-05-22 14:24 星期一</span>
-            <div>
-                <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-home"></span>主页
-                </button>
-                <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-king"></span>修改密码
-                </button>
-                <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-eye-close"></span> User
-                </button>
-            </div>
+    <div id="nav-toolbar" class="right  full-height">
+        <span class="aic-nav-msg">欢迎您，[ Administrator ]</span>
+        <span>&nbsp;|&nbsp;</span>
+        <i class="glyphicon glyphicon-time"></i>
+        <span id="showTime"></span>
+        <i class="aic-nav-logout" data-bind="click:exitBtnClick"></i>
+        <span data-bind="click:exitBtnClick">&nbsp;退出</span>
+        <div>
+            <button type="button" class="btn btn-info ">
+                <i class="glyphicon glyphicon-home"></i>主页
+            </button>
+            <button type="button" class="btn btn-info ">
+                <i class="glyphicon glyphicon-king"></i>修改密码
+            </button>
+            <button type="button" class="btn btn-info ">
+                <i class="glyphicon glyphicon-eye-close"></i> User
+            </button>
         </div>
+    </div>
 </nav>
 <div id="page-container" class="full-width full-height transition-all-05">
     <div id="navigation" class="full-height left transition-all-05">
@@ -59,14 +57,32 @@
     <div id="hover-nav" class="full-height left" data-state="showed">
         <img src="src/images/8_8/arrow_left.png" alt="" width="8" height="8">
     </div>
-    <div id="map-container" class="full-height left transition-all-05">
+    <div id="map-container" class="full-height left transition-all-05" style="position: relative">
+        <div id="leftToolBar" style="display: none">
+            <ul>
+                <li id="monitor_1" class="btn-default">信号机1</li>
+                <li id="monitor_2" class="btn-default">信号机2</li>
+                <li id="monitor_3" class="btn-default">信号机3</li>
+            </ul>
+        </div>
+        <div id="toolBarHover" data-state="showed" style="display: none">
+            <img src="src/images/8_8/arrow_left.png" style="transform:rotate(90deg);" alt="" width="8" height="8">
+        </div>
+        <div id="dash_bord">
+            <div id="monitor1" style="height: 50%;text-align: center">
+                <span class="btn-warning" >信号机1</span>
+            </div>
+            <div id="monitor2" style="height: 50%;text-align: center">
+                <span class="btn-warning">信号机2</span>
+            </div>
+        </div>
     </div>
 </div>
 <div style="display:none;">
 
     <div id="marker" title="监控机"></div>
     <!--Popup-->
-    <div id="popup" title="监控机"></div>
+    <div id="popup"></div>
 </div>
 <div class="modal fade" id="login-modal" data-bind="events:{shown.bs.modal:modalShow}" tabindex="-1"
      role="alertdialog" aria-labelledby="loginModalLabel">
@@ -104,5 +120,34 @@
 <script src="src/libs/kendo/kendo.all.min.js"></script>
 <script src="src/libs/openlayersv-4.1.1/ol.js"></script>
 <script data-main="app.js" src="src/libs/require/r.js"></script>
+
+<script id="db_model" type="text/x-kendo-template">
+    <table class="table table-bordered full-width">
+        <tbody>
+        <tr>
+            <td>ID</td>
+            <td>#= data.id #</td>
+            <td>模式</td>
+            <td>#= data.mode #</td>
+        </tr>
+        <tr>
+            <td>在线/离线</td>
+            <td>#= data.online #</td>
+            <td>方案</td>
+            <td>#= data.plan #</td>
+        </tr>
+        <tr>
+            <td>阶段</td>
+            <td>#= data.stage #</td>
+            <td>状态</td>
+            <td>#= data.state #</td>
+        </tr>
+        <tr>
+            <td>时间</td>
+            <td colspan="3">#= data.time #</td>
+        </tr>
+        </tbody>
+    </table>
+</script>
 </body>
 </html>
