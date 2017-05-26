@@ -1,19 +1,46 @@
 /**
  * Created by Ninghai on 2017/5/18.
  */
-define(function () {
+define(["requestAsync"], function (requestAsync) {
     "use strict";
     function initInterFaceImpl(menuOptions) {
-        initNavImpl();
         initHoverNav();
-        initMenu(menuOptions);
     }
 
-    function initNavImpl() {
-    }
+    /**
+     * 初始化右侧信息板
+     * @param view HTMLElement
+     */
+    function initDashBoardImpl(view) {
+        var timer;
+        $('#leftToolBar ul li').on('click', function () {
+            var id = $(this).attr("id");
+            if ($(this).hasClass('btn-warning')) {
+                return;
+            } else {
+                $("#leftToolBar ul li").each(function () {
+                    $(this).removeClass('btn-warning');
+                });
+                $(this).removeClass('btn-default').addClass('btn-warning');
 
-    function initMenu(options) {
-        console.log(options);
+                clearInterval(timer);
+
+                var monitorId = parseInt(id.split('_')[1]),
+                    template = kendo.template($('#db_model').html());
+                timer = setInterval(function () {
+                    requestAsync.post({
+                        url: 'http://192.168.0.4:8080/WatchWeb_NEW/Main',
+                        data: {"id": monitorId}
+                    }).then(function (data) {
+                        var result = template(data);
+                        $(view).find('table').remove();
+                        $(view).append(result);
+                    })
+                }, 1000000);
+            }
+        });
+
+        $('#leftToolBar ul li:first').trigger('click');
     }
 
     function initHoverNav() {
@@ -23,6 +50,14 @@ define(function () {
                 hideMenu();
             } else {
                 showMenu();
+            }
+        });
+        $('#toolBarHover').on('click', function () {
+            var isShow = $(this).attr("data-state");
+            if (isShow === "showed") {
+                hideRightBar();
+            } else {
+                showRightBar()
             }
         })
     }
@@ -43,8 +78,27 @@ define(function () {
         $('#hover-nav').attr('title', '隐藏菜单栏');
     }
 
+    function hideRightBar() {
+        $('#leftToolBar').css("height", "0");
+        $('#leftToolBar').css("visibility", "hidden");
+        $('#toolBarHover').find('img').css("transform", "rotate(-90deg)");
+        $('#toolBarHover').css('top', '0');
+        $('#toolBarHover').attr('title', '展开');
+        $('#toolBarHover').attr('data-state', 'hidden');
+    }
+
+    function showRightBar() {
+        $('#leftToolBar').css("height", "250px");
+        $('#leftToolBar').css("visibility", "visible");
+        $('#toolBarHover').find('img').css("transform", "rotate(90deg)");
+        $('#toolBarHover').css('top', '250px');
+        $('#toolBarHover').attr('title', '收起');
+        $('#toolBarHover').attr('data-state', 'showed');
+    }
+
 
     return {
-        initInterface: initInterFaceImpl
+        initInterface: initInterFaceImpl,
+        initDashBoard: initDashBoardImpl
     }
 });

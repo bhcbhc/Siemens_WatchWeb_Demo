@@ -13,10 +13,60 @@
   opacity: 0.5;
 }
 
-#popup{
+#popup {
   background-color: #8959ca;
 }
 
 .popover-content {
   min-width: 180px;
+}
+
+#leftToolBar {
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 250px;
+  height: 250px;
+  z-index: 999;
+  background-color: rgba(93, 156, 232, 0.32);
+  /*  opacity: 0.5;*/
+
+  ul {
+    display: flex;
+    justify-content: space-around;
+    li {
+      font-size: 14px;
+      font-weight: bolder;
+      cursor: pointer;
+      /*    padding: 0 5px;*/
+    }
+  }
+}
+
+#toolBarHover {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 0px;
+  top: 250px;
+  width: 250px;
+  height: 10px;
+  z-index: 999;
+  cursor: pointer;
+  color: #929292;
+  background: linear-gradient(to bottom, #DFE4F4, #b9b9b9 40%, #DFE4F4);
+  /*  opacity: 0.5;*/
+}
+
+#dash_bord{
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 250px;
+  height: 410px;
+  z-index: 999;
+  background-color: #b6b6b6;
 }

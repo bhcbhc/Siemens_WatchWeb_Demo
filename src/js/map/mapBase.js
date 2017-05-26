@@ -75,17 +75,16 @@ define(function () {
         var point = initCoord(coord);
         var iconFeature = new ol.Feature({
             geometry: new ol.geom.Point(point),
-            name: '监测点'+id
-            //population: 4000,
-            //rainfall: 500
+            id:id,
+            name: '监测点' + id,
         });
 
         var iconStyle = new ol.style.Style({
             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */
                 ({
                     anchor: [0.5, 1],//位置
-                    //anchorXUnits: 'fraction',
-                    //anchorYUnits: 'pixels',
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
                     src: url
                 }))
         });

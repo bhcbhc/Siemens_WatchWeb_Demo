@@ -30,4 +30,10 @@ nav {
       vertical-align: middle;
       cursor: pointer; }
 
+#nav-toolbar div {
+  display: flex;
+  justify-content: space-around; }
+  #nav-toolbar div button {
+    width: 90px; }
+
 /*# sourceMappingURL=navigator.css.map */
