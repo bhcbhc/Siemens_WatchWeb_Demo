@@ -2,7 +2,6 @@
  * Created by Ninghai on 2017/5/19.
  */
 define(function () {
-    "use strict";
 
     /**
      *
@@ -28,8 +27,53 @@ define(function () {
 
     }
 
+    function createXHRImplIe() {
+        if (typeof XMLHttpRequest != "undefined") {
+
+        } else if (typeof ActiveXObject != "undefined") {
+            if (arguments.callee.activeXString != "string") {
+                var versions = ["MSXML2.XMLHttp.6.0", "MSXML2.XMLHttp.3.0", "MSXML2.XMLHttp"],
+                    i,
+                    len;
+
+                for (i = 0, len = versions.length; i < len; i++) {
+                    try {
+                        new ActiveXObject(versions[i]);
+                        arguments.callee.activeXString = versions[i];
+                    } catch (e) {
+
+                    }
+                }
+            }
+            return new ActiveXObject(arguments.callee.activeXString);
+        } else {
+            throw new Error("该浏览器没有XHR对象");
+        }
+
+    }
+
+    function createXHRImpl(url, data) {
+        var d = $.Deferred();
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    d.resolve(xhr.responseText);
+                }
+            }
+        };
+        xhr.open('post', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+        // xhr.send('reqAll=' + JSON.stringify(data));
+        xhr.send('reqAll=' + data);
+        return d.promise();
+    }
+
     return {
         post: ajaxPostIpml,
-        get: ajaxGetImpl
+        get: ajaxGetImpl,
+        postCors: createXHRImpl,
     }
 });
