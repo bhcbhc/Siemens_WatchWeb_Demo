@@ -2,3 +2,6 @@
 .gitignore
 .idea/
 /src/libs/
+/src/tiles/
+/infterfaceTest/
+/allTest/

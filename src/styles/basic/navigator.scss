@@ -6,7 +6,7 @@ nav {
   background-color: #669999;
   border-bottom: 1px solid #ebecee;
   padding-right: 20px;
-  >span{
+  > span {
     vertical-align: middle;
     font-size: 22px;
     font-weight: bold;
@@ -14,14 +14,14 @@ nav {
     color: #fff;
     line-height: 50px;
   }
-  >div{
+  > div {
     font-size: 14px;
     color: #fff;
 
-    span{
+    span {
       vertical-align: middle;
     }
-    .aic-nav-logout{
+    .aic-nav-logout {
       display: inline-block;
       width: 20px;
       height: 20px;
@@ -36,10 +36,10 @@ nav {
   }
 }
 
-#nav-toolbar div{
+#nav-toolbar div {
   display: flex;
   justify-content: space-around;
-  button{
+  button {
     width: 90px;
   }
 }

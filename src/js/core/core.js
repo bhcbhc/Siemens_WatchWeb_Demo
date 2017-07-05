@@ -1,13 +1,14 @@
 /**
- * Created by Ninghai on 2017/5/24.
+ * Created by Ninghai on 2017/6/16.
  */
-define(["getTree", "timer", "initWeb", "ml", "mapBase"], function (getTree, timer, initWeb, ml, mapBase) {
+define(['mapBase', 'initWeb', 'getTree', 'timer'], function (mapBase, initWeb, getTree, timer) {
     "use strict";
 
-    function initImpl() {
+    function initialize() {
 
         //初始化左侧菜单栏
         $('#main-menu').kendoPanelBar({});
+        var menu = $('#main-menu').data('kendoPanelBar');
 
         //初始化弹出框
         $('#chart').kendoChart({
@@ -60,12 +61,8 @@ define(["getTree", "timer", "initWeb", "ml", "mapBase"], function (getTree, time
         });
         $("#timeSelect").kendoDateTimePicker({
             format: "yyyy/MM/dd",
-            min:new Date(2017,0,0)
+            min: new Date(2017, 0, 0)
         });
-
-
-
-        var menu = $('#main-menu').data('kendoPanelBar');
 
         $.getJSON('src/js/menu.json').then(function (d) {
             var data = [];
@@ -80,36 +77,36 @@ define(["getTree", "timer", "initWeb", "ml", "mapBase"], function (getTree, time
             });
         });
 
+
+        window.viewModel = kendo.observable({
+            link_id: null,
+            timeSelect: new Date(2017, 6, 30),
+            series: [],
+            getChart: function () {
+                var id = this.link_id;
+                var time = $('#timeSelect').val();
+                if (id) {
+                    $.getJSON('./src/allDataTest/chartData.json').then(function (data) {
+                        viewModel.set('series', data);
+                    })
+                }
+            }
+        });
+
+        kendo.bind('body', viewModel);
+
         //加载本地时间
         timer.setTime($('#showTime'));
 
-        //初始化地图
-        var basicConf = {
-            view: 'map-container',
-            //116.4615, 39.97817
-            point: [39.98362, 116.46628],
-            zoom: 17,
-            mark: [
-                {
-                    url: "src/images/siemens/intersections.png",
-                    point: [39.98269, 116.46636],
-                    id: "1"
-                },
-                {
-                    url: "src/images/siemens/intersections.png",
-                    point: [39.98495, 116.46287],
-                    id: "2"
-                }
-            ]
-        };
+        //展开/隐藏 菜单栏 初始化信息板
         initWeb.initInterface("menu");
 
-        var map = mapBase.initMap(basicConf);
+        var map = mapBase.createMap();
 
         return map;
     }
 
     return {
-        init: initImpl
+        init: initialize
     }
 });

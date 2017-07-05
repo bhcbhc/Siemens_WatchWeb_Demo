@@ -1,0 +1,42 @@
+[
+  {
+    "siemens": 7,
+    "baidu": 5,
+    "date": "00:05"
+  },
+  {
+    "siemens": 5,
+    "baidu": 4,
+    "date": "00:10"
+  },
+  {
+    "siemens": 10,
+    "baidu": 8,
+    "date": "00:15"
+  },
+  {
+    "siemens": 8,
+    "baidu": 7,
+    "date": "00:20"
+  },
+  {
+    "siemens": 15,
+    "baidu": 10,
+    "date": "00:25"
+  },
+  {
+    "siemens": 18,
+    "baidu": 14,
+    "date": "00:30"
+  },
+  {
+    "siemens": 17,
+    "baidu": 16,
+    "date": "00:35"
+  },
+  {
+    "siemens": 9,
+    "baidu": 10,
+    "date": "00:40"
+  }
+]

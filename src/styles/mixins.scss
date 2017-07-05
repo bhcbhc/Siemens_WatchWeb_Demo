@@ -1,9 +1,0 @@
-@charset "utf-8";
-
-//前缀
-@mixin prefix($property,$value) {
-  -webkit-#{$property}: $value;
-  -moz-#{$property}: $value;
-  -o-#{$property}: $value;
-  #{$property}: $value;
-}

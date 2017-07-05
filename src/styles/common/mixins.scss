@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+$text-size-adjust: 100% !default;
+
+//浏览器前缀
+@mixin prefix($property,$value) {
+  -webkit-#{$property}: $value;
+  -moz-#{$property}: $value;
+  -o-#{$property}: $value;
+  #{$property}: $value;
+}
+
+//盒子模型
+@mixin box($value) {
+  @include prefix(box-sizing, $value)
+}
+
+//过渡效果
+@mixin transit($transition) {
+  @include prefix(transition, $transition)
+}
+
+//手机横屏控制
+@mixin text-adjust-control($text-size:$text-size-adjust) {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
