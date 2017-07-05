@@ -2,53 +2,48 @@
  * Created by Ninghai on 2017/5/19.
  */
 define(function () {
+    "use strict";
+
     /**
-     *[116.4615, 39.97817]
-     * @param options  {view:string,positon:[12.3,4454],zoom?:number,mark:[{id:'',point:'',url:''},{},...]}
+     * 初始化坐标点
+     *从openstreemap获取经度和纬度，将地理坐标系转换为墨卡托坐标
+     * @param point ["经度","维度"]
      */
-    function initMapImpl(options) {
-        var map = initLayer1(options);
-        return map;
+    function transformCoord(point) {
+        var coord = [point[1], point[0]];
+        return ol.proj.transform(coord, 'EPSG:4326', 'EPSG:3857');
     }
 
-    function initLayer1(options) {
-        if (!$('#' + options.view).length) {
+    /**
+     * 初始化地图
+     * @param options:mapConfig
+     */
+    function createMapImpl() {
+        var basicData = AppConfig.mapConfig;
+        if (!$('#' + basicData.target).length) {
             console.log("the mapContainer should be an element's ID of Html!");
             return;
         }
 
-        var zoom = options.zoom ? options.zoom : 19;
-        // var extent = defineSize(options.point);
+        var view = {
+            center: ol.proj.transform([basicData.view.center[1], basicData.view.center[0]], 'EPSG:4326', 'EPSG:3857'),//地图中心
+            extent: basicData.view.extent,//限制地图中心范围
+            zoom: basicData.view.zoom,
+            minZoom: basicData.view.minZoom,
+            maxZoom: basicData.view.maxZoom
+        };
 
         var map = new ol.Map({
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                })
-            ],
-            target: options.view,
-            controls: ol.control.defaults({
-                attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-                    collapsible: false
-                })
+            interactions: ol.interaction.defaults({
+                shiftDragZoom: false,
+                pinchRotate: false,
+                pinchZoom: false
             }),
-            view: new ol.View({
-                //extent: ol.proj.transformExtent(extent, 'EPSG:4326', 'EPSG:3857'),
-                center: initCoord(options.point),
-                zoom: options.zoom
-            })
+            layers: basicData.layers,
+            view: new ol.View(view),
+            logo: basicData.logo,
+            target: basicData.target,
         });
-
-        //添加默认标记
-        if (options.mark) {
-            var marks = options.mark;
-            for (var i = 0, len = marks.length; i < len; i++) {
-                var mark = marks[i];
-                var perMarl = addIconImpl(mark.point, mark.url, mark.id);
-                map.addLayer(perMarl);
-            }
-        }
-
 
         $('#zoom-out').on('click', function () {
             var view = map.getView();
@@ -60,60 +55,285 @@ define(function () {
             var zoom = view.getZoom();
             view.setZoom(zoom + 1);
         });
-
         return map;
     }
 
-    /**
-     *添加图层标注
-     * @param coord 坐标点
-     * @param url 标记图片地址
-     * @param id  标记对应id
-     * @return {ol.layer.Vector}
-     */
-    function addIconImpl(coord, url, id) {
-        var point = initCoord(coord);
-        var iconFeature = new ol.Feature({
-            geometry: new ol.geom.Point(point),
-            id:id,
-            name: '监测点' + id,
+    function createLayerImpl() {
+        var layer = new ol.layer.Vector({
+            source: new ol.source.Vector()
         });
 
-        var iconStyle = new ol.style.Style({
-            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */
-                ({
-                    anchor: [0.5, 1],//位置
-                    anchorXUnits: 'fraction',
-                    anchorYUnits: 'pixels',
-                    src: url
-                }))
-        });
-        //iconStyle.getImage().setScale(0.3);
-        iconFeature.setStyle(iconStyle);
-
-        var vectorSource = new ol.source.Vector({
-            features: [iconFeature]
-        });
-
-        var vectorLayer = new ol.layer.Vector({
-            source: vectorSource
-        });
-
-        return vectorLayer;
+        return layer
     }
 
+    function createFeatureImpl() {
 
-    /**
-     * 初始化坐标点
-     *从openstreemap获取经度和纬度，将地理坐标系转换为墨卡托坐标
-     * @param point ["经度","维度"]
-     */
-    function initCoord(point) {
-        var coord = [point[1], point[0]];
-        return ol.proj.transform(coord, 'EPSG:4326', 'EPSG:3857');
-        //ol.proj.fromLonLat([116.28,39.54]);
 
+        var lineStyle = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                width: 6,
+                color: "blue"
+            })
+        });
+        var circleStyle = new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                stroke: new ol.style.Stroke({color: "red", size: 3})
+            })
+        });
+
+
+        /**
+         * 创建line
+         * @param points :[[number1,number2],[]...]
+         * @param id:string
+         * @return {ol.Feature}
+         */
+        function createLineImpt(points, id) {
+            var transformPoints = [];
+            points.map(function (item, index) {
+                transformPoints.push(transformCoord(item));
+            });
+
+            var linePoint = new ol.Feature({
+                geometry: new ol.geom.LineString(transformPoints)
+            });
+
+            linePoint.setStyle(lineStyle);
+
+            if (id) {
+                linePoint.setId(id);
+            }
+
+            return linePoint;
+        }
+
+        /**
+         *创建文字信息
+         * @param mao
+         * @param options {point:[],text:"string',style:{font:"",color:"",fill:""},position:[0.5,0.5]}
+         * @return {ol.Feature}
+         */
+        function createTextImpt(options) {
+            var point = transformCoord(options.point);
+            var text = new ol.Feature({
+                geometry: new ol.geom.Point(point)
+            });
+
+            text.setStyle(new ol.style.Style({
+                text: new ol.style.Text({
+                    font: options.style.font ? options.style.font : "10px sans-serif",
+                    text: options.text ? options.text : "无标题",
+                    fill: new ol.style.Fill({
+                        color: options.style.color ? options.style.color : "red"
+                    })
+                })
+            }));
+
+            return text;
+        };
+
+        /**
+         *  创建标记点，定义随zoom等级变化函数
+         * @param map
+         * @param options :{url:"",id:"",point:[],position:[0.5,0.5],scale:number}
+         * @return {ol.Feature}
+         */
+        function createMonitorImpt(map, options) {
+            var point = transformCoord(options.point);
+            var anchor = new ol.Feature({
+                geometry: new ol.geom.Point(point),
+                name: '监测点' + options.id
+            });
+
+            //应用style function,动态的获取样式
+            anchor.setStyle(function (resolution) {
+                return [new ol.style.Style({
+                    image: new ol.style.Icon({
+                        src: options.url,
+                        scale: map.getView().getZoom() / (options.scale ? options.scale : 20),
+                        anchor: options.position ? options.position : [0.5, 0.5]
+                    })
+                })];
+            });
+
+            if (options.id) {
+                anchor.setId(options.id);
+            }
+
+            return anchor;
+        };
+
+        /**
+         *
+         * @param option:[]
+         * @return {ol.Feature}
+         */
+        function createCircleImpt(option) {
+            var point = transformCoord(option);
+            var circle = new ol.Feature({
+                geometry: new ol.geom.Point(point)
+            });
+            circle.setStyle(circleStyle);
+
+            return circle;
+        };
+
+
+        /**
+         *创建canvas 红绿箭头
+         * @param width:number
+         * @param height:number
+         * @return {{arrow1: Element, arrow2: Element}}
+         */
+        function createCanvas(width, height) {
+            var canvas1 = document.createElement('canvas'),
+                canvas2 = document.createElement('canvas');
+
+            var _width = width ? width : 30;
+            var _height = height ? height : 20;
+
+            canvas1.width = _width;
+            canvas2.width = _width;
+            canvas1.height = _height;
+            canvas2.height = _height;
+
+            var context = canvas1.getContext('2d');
+            var context2 = canvas2.getContext('2d');
+
+            context.strokeStyle = "red";
+            context.fillStyle = "red";
+            context.lineWidth = 1;
+
+            context2.strokeStyle = "green";
+            context2.fillStyle = "green";
+            context2.lineWidth = 1;
+
+            context.beginPath();
+            context.moveTo(20, 0);
+            context.lineTo(30, 10);
+            context.lineTo(20, 20);
+            context.lineTo(20, 15);
+            context.lineTo(0, 15);
+            context.lineTo(0, 5);
+            context.lineTo(20, 5);
+            context.lineTo(20, 0);
+
+            context.stroke();
+            context.fill();
+
+            context2.beginPath();
+            context2.moveTo(20, 0);
+            context2.lineTo(30, 10);
+            context2.lineTo(20, 20);
+            context2.lineTo(20, 15);
+            context2.lineTo(0, 15);
+            context2.lineTo(0, 5);
+            context2.lineTo(20, 5);
+            context2.lineTo(20, 0);
+
+            context2.stroke();
+            context2.fill();
+
+            return {
+                redArrow: canvas1,
+                greenArrow: canvas2
+            }
+        }
+
+        var redArrow = createCanvas(30, 20).redArrow;
+        var greenArrow = createCanvas(30, 20).greenArrow;
+
+        /**
+         * 添加自定义的canvas
+         * @param option:{point:[],style:{rotation:""},id:""}
+         * @return {ol.Feature}
+         */
+        function createArrowImpt(map, option) {
+            var point = transformCoord(option.point);
+            var arrow_1Style = new ol.style.Style({
+                image: new ol.style.Icon({
+                    img: redArrow,
+                    imgSize: [redArrow.width, redArrow.height],
+                    rotation: option.style.rotation
+                })
+            });
+
+            /*            var redArrayStyle = function (resolution) {
+             return [new ol.style.Style({
+             image: new ol.style.Icon({
+             img: redArrow,
+             imgSize: [redArrow.width, redArrow.height],
+             scale: map.getView().getZoom() / (option.scale ? option.scale : 20),
+             anchor: option.position ? option.position : [0.5, 0.5],
+             rotation: option.style.rotation,
+             })
+             })];
+             };
+             var arrow1_style = function (resolution) {
+             return [new ol.style.Style({
+             image: new ol.style.Icon({
+             img: greenArrow,
+             imgSize: [greenArrow.width, greenArrow.height],
+             scale: map.getView().getZoom() / (option.scale ? option.scale : 20),
+             anchor: option.position ? option.position : [0.5, 0.5],
+             rotation: option.style.rotation,
+             })
+             })];
+             };*/
+
+            var arrowFeature = new ol.Feature({
+                geometry: new ol.geom.Point(point)
+            });
+
+            arrowFeature.setStyle(arrow_1Style);
+
+            if (option.id) {
+                arrowFeature.setId(option.id);
+            }
+
+            return arrowFeature;
+        }
+
+        /**
+         *
+         * @param rotation
+         * @return {{greenStyle: ol.style.Style, redStyle: ol.style.Style}}
+         */
+        function getArrowStyleImpl(rotation) {
+            var style1 = new ol.style.Style({
+                image: new ol.style.Icon({
+                    img: greenArrow,
+                    imgSize: [greenArrow.width, greenArrow.height],
+                    rotation: rotation,
+                    fill: "green"
+                })
+            });
+            var style2 = new ol.style.Style({
+                image: new ol.style.Icon({
+                    img: redArrow,
+                    imgSize: [redArrow.width, redArrow.height],
+                    rotation: rotation,
+                    fill: "green"
+                })
+            });
+
+            return {
+                greenStyle: style1,
+                redStyle: style2
+            }
+        }
+
+        return {
+            createLine: createLineImpt,
+            createMonitor: createMonitorImpt,
+            createText: createTextImpt,
+            createCircle: createCircleImpt,
+            createArrow: createArrowImpt,
+            getArrowStyle: getArrowStyleImpl
+        }
     }
+
 
     /**
      * 设置地图范围边界
@@ -127,8 +347,11 @@ define(function () {
 
     }
 
+
     return {
-        initMap: initMapImpl,
-        addIcon: addIconImpl
+        transformPoint: transformCoord,
+        createMap: createMapImpl,
+        createLayer: createLayerImpl,
+        createFeature: createFeatureImpl
     }
 });
