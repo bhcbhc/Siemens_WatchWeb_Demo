@@ -97,21 +97,21 @@
                         <span class="login-icon1"></span>
                     </label>
                     <input type="url" class="login-input" data-bind="value:serverAddress" autocomplete="off"
-                           maxlength="100" autofocus="autofocus" required="required" />
+                           maxlength="100" autofocus="autofocus" required="required"/>
                 </div>
                 <div class="login-form-item">
                     <label class="login-label">
                         <span class="login-icon login-icon-user"></span>
                     </label>
                     <input type="text" class="login-input" data-bind="value:userName" autocomplete="off"
-                           maxlength="100" placeholder="用户名" required="required" />
+                           maxlength="100" placeholder="用户名" required="required"/>
                 </div>
                 <div class="login-form-item">
                     <label class="login-label">
                         <span class="login-icon login-icon-pwd"></span>
                     </label>
                     <input type="password" class="login-input" data-bind="value:password" autocomplete="off"
-                           maxlength="100" placeholder="密码" required="required" />
+                           maxlength="100" placeholder="密码" required="required"/>
                 </div>
             </div>
             <div class="modal-footer">
@@ -125,11 +125,17 @@
     <div class="modal-dialog" role="document" style="height: 200px;width: 50%">
         <div class="modal-content">
             <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                </button>
                 <div id="chart_selector" style="position: relative">
-                    <input type="text" data-bind="value:timeSelect" id="timeSelect" class="form-control" />
-                    <input name="checkbox" type="checkbox" value="checkbox" checked="checked" />
-                    <button  type="button" class="btn btn-info btn-sm"  data-bind="click:getChart" style="float: right;margin-right: 20px">确认</button>
+                    <input type="text" data-bind="value:timeSelect" id="timeSelect" class="form-control"/>
+                    <div class="checkbox-inline">
+                        <input type="checkbox" id="allDaysCheckbox" class="checkbox-inline" checked="checked"/>
+                        <label>选择当天前24小时</label>
+                    </div>
+                    <button type="button" class="btn btn-info btn-sm" data-bind="click:getChart"
+                            style="float: right;margin-right: 20px">确认
+                    </button>
                 </div>
                 <div id="chart" data-bind="source:series"></div>
             </div>
@@ -144,6 +150,7 @@
 <script src="src/libs/kendo/kendo.all.min.js"></script>
 <script data-main="src/app.js" src="src/libs/require/require.js"></script>
 
+<!--template monitor-->
 <script id="db_model" type="text/x-kendo-template">
     <table class="table table-bordered full-width">
         <tbody>
