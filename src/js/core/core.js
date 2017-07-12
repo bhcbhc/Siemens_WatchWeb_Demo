@@ -71,7 +71,6 @@ define(['mapBase', 'initWeb', 'getTree', 'timer'], function (mapBase, initWeb, g
 
             }
             var tree = getTree.getTree(data, 0);
-            console.log(tree);
             menu.setOptions({
                 dataSource: tree
             });
@@ -85,8 +84,14 @@ define(['mapBase', 'initWeb', 'getTree', 'timer'], function (mapBase, initWeb, g
             getChart: function () {
                 var id = this.link_id;
                 var time = $('#timeSelect').val();
+                console.log("link_id:%s=>时间%s", id, time);
                 if (id) {
-                    $.getJSON('./src/allDataTest/chartData.json').then(function (data) {
+                    $.ajax({
+                        url: AppConfig.serverAddress + AppConfig.linkMessageAddress,
+                        type: "post",
+                        data: {"link_id": id, "date": time, "isAllDays": true},
+                        dataType: "json"
+                    }).then(function (data) {
                         viewModel.set('series', data);
                     })
                 }

@@ -7,7 +7,6 @@ require.config({
         'getTree': './js/utils/treeUtil',
         'requestAsync': './js/utils/requestAsync',
         'timer': './js/utils/localTimer',
-        //'init': './js/core/init',
 
         'mapBase': './js/map/mapBase',
         'mapUtils': './js/map/BDToWGS',
@@ -45,10 +44,8 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
     });
 
     //添加线
-    /*    var line = mapBase.createFeature().createLine([[39.98256, 116.46641], [39.98495, 116.46287]], id);
-     anchorLayer.getSource().addFeature(line);*/
     $.ajax({
-        url: AppConfig.BDServerAddress,
+        url: AppConfig.serverAddress + AppConfig.BDPointsAddress,
         type: "post",
         data: {"reqAll": false, "link_id": 15260289930},
         dataType: "json"
@@ -115,8 +112,7 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
     //demo信息板
     var timer1 = setInterval(function () {
         requestAsync.post({
-            url: 'http://192.168.0.4:8080/WatchWeb_NEW/Main',
-            //url: './monitor.json',
+            url: AppConfig.serverAddress + AppConfig.monitorAddress,
             data: {"id": 1}
         }).then(function (data) {
             if (!data) {
@@ -127,12 +123,11 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
             $('#monitor1').find('table').remove();
             $('#monitor1').append(result);
         })
-    }, 2500000);
+    }, 5000);
 
     var timer2 = setInterval(function () {
         requestAsync.post({
-            url: 'http://192.168.0.4:8080/WatchWeb_NEW/Main',
-            //url: './monitor.json',
+            url: AppConfig.serverAddress + AppConfig.monitorAddress,
             data: {"id": 2}
         }).then(function (data) {
             if (!data) {
@@ -143,7 +138,7 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
             $('#monitor2').find('table').remove();
             $('#monitor2').append(result);
         })
-    }, 2500000);
+    }, 5000);
 
     function formatData(data) {
         var formatedData = {};
@@ -226,17 +221,17 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
     }, 500);
 
     //获取像素
-    // map.getView().on('change:resolution', function (p1) {
-    //     console.log(map.getView().getZoom());
-    //     if (map.getView().getZoom() <= 17) {
-    //         arrow.hide();
-    //         arrow2.hide();
-    //         arrow3.hide();
-    //         arrow4.hide();
-    //     } else {
-    //         arrow.hide();
-    //     }
-    // })
+/*    map.getView().on('change:resolution', function (p1) {
+        console.log(map.getView().getZoom());
+        if (map.getView().getZoom() <= 17) {
+            arrow.hide();
+            arrow2.hide();
+            arrow3.hide();
+            arrow4.hide();
+        } else {
+            arrow.hide();
+        }
+    })*/
 
     /*    map.getView().on("change:center",function (event) {
      console.log("当前中心点%O",map.getView().getCenter());

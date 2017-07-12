@@ -71,9 +71,39 @@ define(function () {
         return d.promise();
     }
 
+    //test Promise
+    function getJson(url) {
+        var promise = new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', url);
+            xhr.onreadystatechange = handler;
+            xhr.responseType = "json";
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.send();
+
+
+            function handler() {
+                if (this.readyState !== 4) {
+                    return;
+                }
+                if (this.readyState === 200) {
+                    resolve(this.response)
+                } else {
+                    reject(new Error(this.statusText))
+                }
+            }
+        });
+
+        return promise;
+    }
+
+    /*   getJson('./tes.json').then(function(data){
+     console.log(data);
+     })*/
+
     return {
         post: ajaxPostIpml,
         get: ajaxGetImpl,
-        postCors: createXHRImpl,
+        postCors: createXHRImpl
     }
 });
