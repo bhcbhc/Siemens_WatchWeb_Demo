@@ -52,14 +52,6 @@ define(["requestAsync"], function (requestAsync) {
                 showMenu();
             }
         });
-        $('#toolBarHover').on('click', function () {
-            var isShow = $(this).attr("data-state");
-            if (isShow === "showed") {
-                hideRightBar();
-            } else {
-                showRightBar()
-            }
-        })
     }
 
     function hideMenu() {
@@ -78,7 +70,7 @@ define(["requestAsync"], function (requestAsync) {
         $('#hover-nav').attr('title', '隐藏菜单栏');
     }
 
-    function hideRightBar() {
+/*    function hideRightBar() {
         $('#leftToolBar').css("height", "0");
         $('#leftToolBar').css("visibility", "hidden");
         $('#toolBarHover').find('img').css("transform", "rotate(-90deg)");
@@ -94,7 +86,7 @@ define(["requestAsync"], function (requestAsync) {
         $('#toolBarHover').css('top', '250px');
         $('#toolBarHover').attr('title', '收起');
         $('#toolBarHover').attr('data-state', 'showed');
-    }
+    }*/
 
 
     return {

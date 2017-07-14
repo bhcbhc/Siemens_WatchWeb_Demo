@@ -23,8 +23,18 @@ define(function () {
         return d.promise();
     }
 
-    function ajaxGetImpl() {
-
+    function ajaxGetImpl(url) {
+        var d = $.Deferred();
+        $.ajax({
+            url: url,
+            type: "get",
+            dataType: "json"
+        }).then(function (data) {
+            d.resolve(data);
+        }).fail(function (data) {
+            d.reject(data);
+        })
+        return d.promise();
     }
 
     function createXHRImplIe() {

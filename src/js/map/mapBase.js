@@ -66,9 +66,14 @@ define(function () {
         return layer
     }
 
+    function getFeatureImpl(coor) {
+        var point = transformCoord(coor);
+        return new ol.Feature({
+            geometry: new ol.geom.Point(point)
+        })
+    }
+
     function createFeatureImpl() {
-
-
         var lineStyle = new ol.style.Style({
             stroke: new ol.style.Stroke({
                 width: 6,
@@ -82,9 +87,8 @@ define(function () {
             })
         });
 
-
         /**
-         * 创建line
+         * Feature line
          * @param points :[[number1,number2],[]...]
          * @param id:string
          * @return {ol.Feature}
@@ -134,6 +138,7 @@ define(function () {
         };
 
         /**
+         * Feature
          *  创建标记点，定义随zoom等级变化函数
          * @param map
          * @param options :{url:"",id:"",point:[],position:[0.5,0.5],scale:number}
@@ -165,7 +170,7 @@ define(function () {
         };
 
         /**
-         *
+         *Feature
          * @param option:[]
          * @return {ol.Feature}
          */
@@ -181,6 +186,7 @@ define(function () {
 
 
         /**
+         * Canvas
          *创建canvas 红绿箭头
          * @param width:number
          * @param height:number
@@ -245,7 +251,8 @@ define(function () {
         var greenArrow = createCanvas(30, 20).greenArrow;
 
         /**
-         * 添加自定义的canvas
+         * Feature
+         * 添加自定义canvas
          * @param option:{point:[],style:{rotation:""},id:""}
          * @return {ol.Feature}
          */
@@ -296,11 +303,13 @@ define(function () {
         }
 
         /**
-         *
+         * Style
+         *添加箭头样式
          * @param rotation
-         * @return {{greenStyle: ol.style.Style, redStyle: ol.style.Style}}
+         * @param stage 0|1
+         * @return  ol.style.Style
          */
-        function getArrowStyleImpl(rotation) {
+        function getArrowStyleImpl(rotation, stage) {
             var style1 = new ol.style.Style({
                 image: new ol.style.Icon({
                     img: greenArrow,
@@ -314,14 +323,55 @@ define(function () {
                     img: redArrow,
                     imgSize: [redArrow.width, redArrow.height],
                     rotation: rotation,
-                    fill: "green"
+                    fill: "red"
                 })
             });
 
-            return {
-                greenStyle: style1,
-                redStyle: style2
+            if (stage) {
+                return style1;
+            } else {
+                return style2;
             }
+        }
+
+
+        /**
+         *
+         * @return {{getEllipseStyle: getEllipseStyleFunc}}
+         */
+        function createSvgImpl() {
+            /**
+             * @param map
+             * @param option
+             * @return {Function}
+             */
+            function getEllipseStyleFunc(map, option) {
+                var svg = '<svg xmlns="http://www.w3.org/2000/svg"  id="Layer_1" version="1.1" x="0px" y="0px" width="100px" height="40px" viewBox="0 0 100 40">' +
+                    '<ellipse cx="50" cy="20" rx="50" ry="20" style="fill:red;"/>' +
+                    '</svg>';
+                var ellipseImg = new Image();
+                ellipseImg.src = 'data:image/svg+xml,' + escape(svg);
+
+                return function () {
+                    return [new ol.style.Style({
+                        image: new ol.style.Icon({
+                            img: ellipseImg,
+                            offset: [1, -1],
+                            imgSize: [200, 100],
+                            scale: map.getView().getZoom() / 20
+                        })
+                    })];
+                }
+            }
+
+            function createOtherStyle() {
+
+            }
+
+            return {
+                getEllipseStyle: getEllipseStyleFunc
+            }
+
         }
 
         return {
@@ -330,7 +380,8 @@ define(function () {
             createText: createTextImpt,
             createCircle: createCircleImpt,
             createArrow: createArrowImpt,
-            getArrowStyle: getArrowStyleImpl
+            getArrowStyle: getArrowStyleImpl,
+            createSvg: createSvgImpl
         }
     }
 
@@ -351,6 +402,7 @@ define(function () {
     return {
         transformPoint: transformCoord,
         createMap: createMapImpl,
+        getFeature: getFeatureImpl,
         createLayer: createLayerImpl,
         createFeature: createFeatureImpl
     }

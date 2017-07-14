@@ -57,22 +57,12 @@
         <img src="src/images/8_8/arrow_left.png" alt="" width="8" height="8">
     </div>
     <div id="map-container" class="full-height left transition-all-05" style="position: relative">
-        <!--        <div id="leftToolBar" style="display: none">
-                    <ul>
-                        <li id="monitor_1" class="btn-default">信号机1</li>
-                        <li id="monitor_2" class="btn-default">信号机2</li>
-                        <li id="monitor_3" class="btn-default">信号机3</li>
-                    </ul>
-                </div>
-                <div id="toolBarHover" data-state="showed" style="display: none">
-                    <img src="src/images/8_8/arrow_left.png" style="transform:rotate(90deg);" alt="" width="8" height="8">
-                </div>-->
         <div id="dash_bord">
             <div id="monitor1" style="height: 50%;text-align: center">
-                <span class="btn-warning">信号机1</span>
+                <span class="btn-warning">路口1</span>
             </div>
             <div id="monitor2" style="height: 50%;text-align: center">
-                <span class="btn-warning">信号机2</span>
+                <span class="btn-warning">路口2</span>
             </div>
         </div>
     </div>
@@ -156,9 +146,7 @@
         <tbody>
         <tr>
             <td>ID</td>
-            <td>#= data.id #</td>
-            <td>模式</td>
-            <td>#= data.mode #</td>
+            <td colspan="3">#= data.id #</td>
         </tr>
         <tr>
             <td>在线/离线</td>
@@ -167,10 +155,22 @@
             <td>#= data.plan #</td>
         </tr>
         <tr>
+            <td>阶段Pre</td>
+            <td>#= data["stage_pre"] #</td>
+            <td>周期Pre</td>
+            <td>#= data["cycle_pre"] #</td>
+        </tr>
+        <tr>
             <td>阶段</td>
             <td>#= data.stage #</td>
+            <td>周期</td>
+            <td>#= data.cycle #</td>
+        </tr>
+        <tr>
             <td>状态</td>
             <td>#= data.state #</td>
+            <td>模式</td>
+            <td>#= data.mode #</td>
         </tr>
         <tr>
             <td>时间</td>

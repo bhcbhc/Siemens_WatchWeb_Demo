@@ -18,8 +18,14 @@
         //信号机数据接口地址
         monitorAddress: "/monitor.json",
 
+        //路口数据接口
+        streamAddress: "/streamData.json",
+
+        //获取所有路口id和坐标
+        allStreamAddress: "/allRoutes.json",
+
         //link-message接口地址
-        linkMessageAddress:"/chartData.json",
+        linkMessageAddress: "/chartData.json",
 
         /////////////////////////////
         ///openlayers地图基本配置///

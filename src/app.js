@@ -22,28 +22,27 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
 
     var map = core.init();
 
-    //创建添加图层
+    var allStream = {},
+        ellipseStyle = mapBase.createFeature().createSvg().getEllipseStyle;
+
+    //添加图层
     var anchorLayer = mapBase.createLayer();
     var largeZoomLayer = mapBase.createLayer();
 
     map.addLayer(anchorLayer);
     map.addLayer(largeZoomLayer);
 
+    largeZoomLayer.setVisible(false);
+
     //添加信号机
     var marks = AppConfig.mapConfig.marks;
     marks.map(function (item) {
         var anchor = mapBase.createFeature().createMonitor(map, item);
-        var lagerSign = mapBase.createFeature().createCircle(item.point);
-
         anchorLayer.getSource()
             .addFeature(anchor);
-
-        largeZoomLayer.getSource().addFeature(lagerSign);
-
-        //anchor.on('click', getFeatureId);
     });
 
-    //添加线
+    //添加线 异步获取点
     $.ajax({
         url: AppConfig.serverAddress + AppConfig.BDPointsAddress,
         type: "post",
@@ -74,12 +73,12 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
             });
         });
 
-
-    //添加圆
-    var circle = mapBase.createFeature().createCircle([39.98256, 116.46641]);
-    anchorLayer.getSource().addFeature(circle);
+    /*    //添加圆
+     var circle = mapBase.createFeature().createCircle([39.98256, 116.46641]);
+     anchorLayer.getSource().addFeature(circle);*/
 
     //添加自定义Feature
+    var getArrayStyle = mapBase.createFeature().getArrowStyle;
     var arrow1 = mapBase.createFeature().createArrow(map, {
         point: [39.98239, 116.46640],
         style: {rotation: 175, scale: 1},
@@ -101,45 +100,104 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
         id: false
     });
 
-
-    var getArrayStyle = mapBase.createFeature().getArrowStyle;
-    var arrow1_start_style = getArrayStyle(-15).greenStyle;
-    arrow3.setStyle(arrow1_start_style);
-
-
     anchorLayer.getSource().addFeatures([arrow1, arrow2, arrow3, arrow4]);
 
+
+    requestAsync.get(AppConfig.serverAddress + AppConfig.allStreamAddress)
+        .then(function (data) {
+            if (!data) {
+                return;
+            }
+            data.map(function (item) {
+                allStream[item["stream_uid"]] = mapBase.getFeature(item.point);
+                allStream[item["stream_uid"]].setStyle(ellipseStyle(map));
+
+                // allStream[item["stream_uid"]].setId(item["stream_uid"]);
+                largeZoomLayer.getSource().addFeature(allStream[item["stream_uid"]]);
+            });
+
+            window.timer = setInterval(function () {
+                requestAsync.get(AppConfig.serverAddress + AppConfig.monitorAddress)
+                    .then(function (data) {
+                        var template = kendo.template($('#db_model').html()),
+                            result1 = template(formatData(data[0])),
+                            result2 = template(formatData(data[1]));
+
+                        setArrowStage(data[0].stage);
+
+                        $('#monitor1').find('table').remove();
+                        $('#monitor1').append(result1);
+
+                        $('#monitor2').find('table').remove();
+                        $('#monitor2').append(result2);
+                    });
+
+                requestAsync.get(AppConfig.serverAddress + AppConfig.streamAddress)
+                    .then(function (data) {
+                        data.map(function (item) {
+                            allStream[item["stream_uid"]].setStyle(ellipseStyle(map, item["stage_length"]))
+                        })
+                    })
+            }, 5000);
+        });
+
     //demo信息板
-    var timer1 = setInterval(function () {
-        requestAsync.post({
-            url: AppConfig.serverAddress + AppConfig.monitorAddress,
-            data: {"id": 1}
-        }).then(function (data) {
-            if (!data) {
-                return
-            }
-            var template = kendo.template($('#db_model').html()),
-                result = template(formatData(data));
-            $('#monitor1').find('table').remove();
-            $('#monitor1').append(result);
-        })
-    }, 5000);
+    /*    var timer1 = setInterval(function () {
 
-    var timer2 = setInterval(function () {
-        requestAsync.post({
-            url: AppConfig.serverAddress + AppConfig.monitorAddress,
-            data: {"id": 2}
-        }).then(function (data) {
-            if (!data) {
-                return
-            }
-            var template = kendo.template($('#db_model').html()),
-                result = template(formatData(data));
-            $('#monitor2').find('table').remove();
-            $('#monitor2').append(result);
-        })
-    }, 5000);
+     requestAsync.post({
+     url: AppConfig.serverAddress + AppConfig.monitorAddress,
+     data: {"id": 1}
+     }).then(function (data) {
+     if (!data) {
+     return;
+     }
+     var template = kendo.template($('#db_model').html()),
+     result = template(formatData(data));
+     $('#monitor1').find('table').remove();
+     $('#monitor1').append(result);
 
+     setArrowStage(data.stage);
+     });
+     }, 5000);
+
+     var timer2 = setInterval(function () {
+     requestAsync.post({
+     url: AppConfig.serverAddress + AppConfig.monitorAddress,
+     data: {"id": 2}
+     }).then(function (data) {
+     if (!data) {
+     return
+     }
+     var template = kendo.template($('#db_model').html()),
+     result = template(formatData(data));
+     $('#monitor2').find('table').remove();
+     $('#monitor2').append(result);
+     })
+     }, 5000);*/
+
+    /**
+     * 根据信号机状态修改箭头style
+     * @param stage
+     */
+    function setArrowStage(stage) {
+        if (stage === 1) {
+            arrow1.setStyle(getArrayStyle(175, 0));
+            arrow2.setStyle(getArrayStyle(65, 0));
+            arrow3.setStyle(getArrayStyle(-15, 1));
+            arrow4.setStyle(getArrayStyle(-12, 1));
+        } else {
+            arrow1.setStyle(getArrayStyle(175, 1));
+            arrow2.setStyle(getArrayStyle(65, 1));
+            arrow3.setStyle(getArrayStyle(-15, 0));
+            arrow4.setStyle(getArrayStyle(-12, 0));
+        }
+    }
+
+    /**
+     * 格式化信号机数据
+     * @param data
+     * @return {{}}
+     */
     function formatData(data) {
         var formatedData = {};
         for (var item in data) {
@@ -207,31 +265,31 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
      }))
      });*/
 
-    setTimeout(function () {
-        var radius = Math.floor(Math.random() * 10 + 10);
-        circle.setStyle(new ol.style.Style({
-            image: new ol.style.Circle({
-                radius: radius,
-                stroke: new ol.style.Stroke({
-                    color: "red",
-                    size: 3
-                })
-            })
-        }))
-    }, 500);
+    /*    setTimeout(function () {
+     var radius = Math.floor(Math.random() * 10 + 10);
+     circle.setStyle(new ol.style.Style({
+     image: new ol.style.Circle({
+     radius: radius,
+     stroke: new ol.style.Stroke({
+     color: "red",
+     size: 3
+     })
+     })
+     }))
+     }, 500);*/
 
     //获取像素
-/*    map.getView().on('change:resolution', function (p1) {
-        console.log(map.getView().getZoom());
-        if (map.getView().getZoom() <= 17) {
-            arrow.hide();
-            arrow2.hide();
-            arrow3.hide();
-            arrow4.hide();
-        } else {
-            arrow.hide();
-        }
-    })*/
+    /*    map.getView().on('change:resolution', function (p1) {
+     console.log(map.getView().getZoom());
+     if (map.getView().getZoom() <= 17) {
+     arrow.hide();
+     arrow2.hide();
+     arrow3.hide();
+     arrow4.hide();
+     } else {
+     arrow.hide();
+     }
+     })*/
 
     /*    map.getView().on("change:center",function (event) {
      console.log("当前中心点%O",map.getView().getCenter());
