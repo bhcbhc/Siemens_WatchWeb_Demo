@@ -1,9 +1,0 @@
-[{
-    "stream_uid":"uid1",
-    "coordinate":[39.98256, 116.46641],
-    "stage_length":[40,20]
-},{
-    "stream_uid":"uid2",
-    "coordinate":[39.98485, 116.46286],
-    "stage_length":[40,20]
-}]

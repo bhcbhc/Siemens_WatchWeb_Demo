@@ -346,8 +346,8 @@ define(function () {
              * @return {Function}
              */
             function getEllipseStyleFunc(map, option) {
-                var svg = '<svg xmlns="http://www.w3.org/2000/svg"  id="Layer_1" version="1.1" x="0px" y="0px" width="100px" height="40px" viewBox="0 0 100 40">' +
-                    '<ellipse cx="50" cy="20" rx="50" ry="20" style="fill:red;"/>' +
+                var svg = '<svg xmlns="http://www.w3.org/2000/svg"  id="Layer_1" version="1.1" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100">' +
+                    '<ellipse cx="50" cy="50" rx="50" ry="50" style="fill:#28a4c9;opacity:0.8;"/>' +
                     '</svg>';
                 var ellipseImg = new Image();
                 ellipseImg.src = 'data:image/svg+xml,' + escape(svg);
@@ -357,8 +357,8 @@ define(function () {
                         image: new ol.style.Icon({
                             img: ellipseImg,
                             offset: [1, -1],
-                            imgSize: [200, 100],
-                            scale: map.getView().getZoom() / 20
+                            imgSize: [100, 100],
+                            scale: (map.getView().getZoom()-12) / 5
                         })
                     })];
                 }

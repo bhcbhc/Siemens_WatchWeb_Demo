@@ -8,24 +8,21 @@
         //////数据接口地址配置 /////
         ////////////////////////////
 
-        //  http://192.168.0.4:8080
-        serverAddress: "file:///E:/aic-tech/Project/Siemens/Siemens_WatchWeb_Demo/src/allDataTest",
+        //  http://192.168.0.4:8080    file:///E:/aic-tech/Project/Siemens/Siemens_WatchWeb_Demo/src/allDataTest
+        serverAddress: "http://192.168.11.8:8080/WatchWeb_NEW",
 
         //百度点坐标数据接口地址
-        // WatchWeb_NEW/Main
-        BDPointsAddress: "/linkPointsData.json",
+        // WatchWeb_NEW/Main  /linkPointsData.json
+        BDPointsAddress: "/BaiduLink",
 
-        //信号机数据接口地址
-        monitorAddress: "/monitor.json",
+        //信号机数据接口地址  /monitor.json
+        monitorAddress: "/StreamData",
 
-        //路口数据接口
-        streamAddress: "/streamData.json",
+        //获取所有路口id和坐标  allRoutes.json
+        allStreamAddress: "/JunctionList",
 
-        //获取所有路口id和坐标
-        allStreamAddress: "/allRoutes.json",
-
-        //link-message接口地址
-        linkMessageAddress: "/chartData.json",
+        //link-message接口地址      、chartData.json
+        linkMessageAddress: "/HistoryData",
 
         /////////////////////////////
         ///openlayers地图基本配置///
@@ -60,22 +57,14 @@
                 minZoom: 13,
                 maxZoom: 19
             },
-            marks: [
-                {
+            monitorParam: {
                     url: "src/images/siemens/intersections.png",
-                    point: [39.98256, 116.46641],
-                    //相对于点的偏移，默认[0.5,0.5]
-                    //position:[0.5,0.5],
-                    //缩小等级
-                    scale: 18,
-                    id: 1
-                },
-                {
-                    url: "src/images/siemens/intersections.png",
-                    point: [39.98485, 116.46286],
-                    id: 2
+                    //point: [39.98256, 116.46641],  //坐标
+                    //position:[0.5,0.5],  //相对于点的偏移，默认[0.5,0.5]
+                    //id: 1,       //id标识
+                   //缩小等级
+                    scale: 18
                 }
-            ]
         }
     }
 }();

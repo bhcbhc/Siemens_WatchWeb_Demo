@@ -20,6 +20,8 @@ $tran-all-05: all 0.5s;
 
 $text-size-adjust: 100%;
 
+$table-header-bgcolor:#1BBC9B;
+
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
   border: 0 none;
   font-size: inherit;
@@ -135,6 +137,28 @@ body {
 .fixed {
   position: fixed;
 }
+
+table{
+  opacity: 0.8;
+  border-collapse: collapse;
+
+  td{
+    border:1px solid #000;
+    text-align: center;
+    font-size: smaller;
+  }
+
+  thead{
+    background: #b9c9fe;;
+    >tr{
+      background-color:$table-header-bgcolor;
+    }
+  }
+  tbody td{
+    background-color: #e8edff;
+  }
+}
+
 
 #navigation {
   overflow: auto;

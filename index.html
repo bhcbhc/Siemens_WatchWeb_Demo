@@ -61,17 +61,14 @@
             <div id="monitor1" style="height: 50%;text-align: center">
                 <span class="btn-warning">路口1</span>
             </div>
-            <div id="monitor2" style="height: 50%;text-align: center">
-                <span class="btn-warning">路口2</span>
-            </div>
         </div>
     </div>
 </div>
 <div style="display:none;">
 
-    <div id="marker" title="监控机"></div>
+    <div id="marker" title="监控机">为什么为什么</div>
     <!--Popup-->
-    <div id="popup"></div>
+    <div id="popup">喂喂喂喂喂喂喂喂</div>
 </div>
 <div class="modal fade" id="login-modal" data-bind="events:{shown.bs.modal:modalShow}" tabindex="-1"
      role="alertdialog" aria-labelledby="loginModalLabel">
@@ -112,7 +109,7 @@
     </div>
 </div> <!--login modal div-->
 <div class="modal fade" id="chart-Modal" tabindex="-1" role="alertdialog">
-    <div class="modal-dialog" role="document" style="height: 200px;width: 50%">
+    <div class="modal-dialog" role="document" style="width: 65%">
         <div class="modal-content">
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
@@ -126,6 +123,12 @@
                     <button type="button" class="btn btn-info btn-sm" data-bind="click:getChart"
                             style="float: right;margin-right: 20px">确认
                     </button>
+                </div>
+                <div class="full-width" id="dataChoose" style="height: 40px">
+                    <button class="right advance"></button>
+                    <button class="right backoff"></button>
+                    <input class="right" id="data-mode-select"/>
+                    <label class="right" for="data-mode-select">选择时间段</label>
                 </div>
                 <div id="chart" data-bind="source:series"></div>
             </div>
@@ -141,42 +144,82 @@
 <script data-main="src/app.js" src="src/libs/require/require.js"></script>
 
 <!--template monitor-->
-<script id="db_model" type="text/x-kendo-template">
-    <table class="table table-bordered full-width">
+<script id="max_message" type="text/x-kendo-template">
+    <table class="full-width">
         <tbody>
         <tr>
-            <td>ID</td>
-            <td colspan="3">#= data.id #</td>
+            <td>编号</td>
+            <td colspan="3">#= data["stream_uid"] #</td>
+            <td>时间</td>
+            <td colspan="3">#= data.time #</td>
         </tr>
         <tr>
             <td>在线/离线</td>
             <td>#= data.online #</td>
             <td>方案</td>
             <td>#= data.plan #</td>
-        </tr>
-        <tr>
-            <td>阶段Pre</td>
-            <td>#= data["stage_pre"] #</td>
-            <td>周期Pre</td>
-            <td>#= data["cycle_pre"] #</td>
-        </tr>
-        <tr>
-            <td>阶段</td>
-            <td>#= data.stage #</td>
-            <td>周期</td>
-            <td>#= data.cycle #</td>
-        </tr>
-        <tr>
             <td>状态</td>
             <td>#= data.state #</td>
             <td>模式</td>
             <td>#= data.mode #</td>
         </tr>
         <tr>
-            <td>时间</td>
-            <td colspan="3">#= data.time #</td>
+            <td>上一阶段</td>
+            <td>#= data["stage_pre"] #</td>
+            <td>上一周期</td>
+            <td>#= data["cycle_pre"] #</td>
+            <td>阶段1</td>
+            <td>#= data["length_pre"].length?data["length_pre"][0]:"" #</td>
+            <td>阶段2</td>
+            <td>#= data["length_pre"].length?data["length_pre"][1] :"" #</td>
+        </tr>
+        <tr>
+            <td>阶段</td>
+            <td>#= data.stage #</td>
+            <td>当前周期</td>
+            <td>#= data.cycle #</td>
+            <td>阶段1</td>
+            <td>#= data["length"].length? data["length"][0]:"" #</td>
+            <td>阶段2</td>
+            <td>#= data["length"].length?data["length"][1]:"" #</td>
         </tr>
         </tbody>
+    </table>
+</script>
+<script id="min_message" type="text/x-kendo-template">
+    <table>
+        <thead>
+        <tr>
+            <td>#= "编号: "+data["stream_uid"] #</td>
+            # for(var i=0;i< data.moreLength;i++){#
+            <td>
+                #="阶段"+ (i+1) #
+            </td>
+            # } #
+            <td>总周期</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>上一周期</td>
+            # for(var i=0;i< data.moreLength;i++){#
+            <td>
+                #=data["length_pre"][i]? data["length_pre"][i]:""#
+            </td>
+            # } #
+            <td>#= data["cycle_pre"] #</td>
+        </tr>
+        <tr>
+            <td>当前周期</td>
+            # for(var i=0;i< data.moreLength;i++){#
+            <td>
+                #= data["length"][i]?data["length"][i]:"" #
+            </td>
+            # } #
+            <td>#= data.cycle #</td>
+        </tr>
+        </tbody>
+
     </table>
 </script>
 </body>

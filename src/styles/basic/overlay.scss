@@ -3,9 +3,45 @@
   position: absolute;
   right: 0px;
   top: 0px;
-  width: 250px;
-  height: 500px;
+  width: 430px;
   z-index: 999;
   background-color: #b6b6b6;
   opacity: 0.8;
+}
+
+#dataChoose {
+  button {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    position: relative;
+    top: 8px;
+    margin: 0 5px;
+    border: 1px solid #e9e9e9;
+    box-shadow: 3px 3px 5px #8e8e8e;
+  }
+
+  .advance {
+    cursor: pointer;
+    margin-right: 3px;
+    background: url(../../images/8_8/advance_default.png) no-repeat;
+  }
+  .backoff {
+    cursor: pointer;
+    margin-right: 3px;
+    background: url(../../images/8_8/backoff_default.png) no-repeat;
+  }
+}
+
+#dataChoose {
+  label {
+    height: 30px;
+    vertical-align: middle;
+    font-size: 14px;
+    display: inline;
+    margin: 12px 5px 0 10px;
+  }
+  span {
+    margin-top: 4px;
+  }
 }

@@ -1,6 +1,6 @@
 [
   {
-    "id": "uid1",
+    "stream_uid": "uid1",
     "mode": 2,
     "online": false,
     "plan": "B",
@@ -14,13 +14,13 @@
       40
     ],
     "length_pre": [
-      30,
-      30
+      40,
+      40
     ],
     "time": "2017-07-12 15:32:00"
   },
   {
-    "id": "uid2",
+    "stream_uid": "uid2",
     "mode": 2,
     "online": false,
     "plan": "B",
@@ -34,8 +34,8 @@
       40
     ],
     "length_pre": [
-      30,
-      30
+      60,
+      20
     ],
     "time": "2017-07-12 15:32:00"
   }
