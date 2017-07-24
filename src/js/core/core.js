@@ -101,13 +101,15 @@ define(['mapBase', 'initWeb', 'getTree', 'timer'], function (mapBase, initWeb, g
             series: [],
             getChart: function () {
                 kendo.ui.progress($('#chart'), true);
-                var id = this.link_id;
-                var time = $('#timeSelect').val();
+                var id = this.link_id,
+                    isAllDay = $('#allDaysCheckbox').is(':checked'),
+                    time = $('#timeSelect').val();
+
                 if (id) {
                     $.ajax({
                         url: AppConfig.serverAddress + AppConfig.linkMessageAddress,
                         type: "post",
-                        data: {"link_id": id, "date": time, "isAllDay": true},
+                        data: {"link_id": id, "date": time, "isAllDay": isAllDay},
                         dataType: "json"
                     }).then(function (data) {
                         kendo.ui.progress($('#chart'), false);

@@ -64,12 +64,6 @@
         </div>
     </div>
 </div>
-<div style="display:none;">
-
-    <div id="marker" title="监控机">为什么为什么</div>
-    <!--Popup-->
-    <div id="popup">喂喂喂喂喂喂喂喂</div>
-</div>
 <div class="modal fade" id="login-modal" data-bind="events:{shown.bs.modal:modalShow}" tabindex="-1"
      role="alertdialog" aria-labelledby="loginModalLabel">
     <div class="modal-dialog" role="document">
@@ -118,7 +112,7 @@
                     <input type="text" data-bind="value:timeSelect" id="timeSelect" class="form-control"/>
                     <div class="checkbox-inline">
                         <input type="checkbox" id="allDaysCheckbox" class="checkbox-inline" checked="checked"/>
-                        <label>选择当天前24小时</label>
+                        <label for="allDaysCheckbox">选择当天前24小时</label>
                     </div>
                     <button type="button" class="btn btn-info btn-sm" data-bind="click:getChart"
                             style="float: right;margin-right: 20px">确认
