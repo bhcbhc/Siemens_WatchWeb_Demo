@@ -7,22 +7,19 @@
         ////////////////////////////
         //////数据接口地址配置 /////
         ////////////////////////////
-
-        //  http://192.168.11.8:8080/WatchWeb_NEW    file:///E:/aic-tech/Project/Siemens/Siemens_WatchWeb_Demo/src/allDataTest
-        serverAddress: "file:///E:/aic-tech/Project/Siemens/Siemens_WatchWeb_Demo/src/allDataTest",
+        serverAddress: "http://192.168.11.8:8080/WatchWeb_NEW",
 
         //百度点坐标数据接口地址
-        // /BaiduLink   /linkPointsData.json
-        BDPointsAddress: "/linkPointsData.json",
+        BDPointsAddress: "/BaiduLink",
 
-        //信号机数据接口地址   /StreamData  /monitor.json
-        monitorAddress: "/monitor.json",
+        //信号机数据接口地址
+        monitorAddress: "/StreamData",
 
-        //获取所有路口id和坐标   /JunctionList  allRoutes.json
-        allStreamAddress: "allRoutes.json",
+        //获取所有路口id和坐标
+        allStreamAddress: "/JunctionList",
 
-        //link-message接口地址    /HistoryData    /chartData.json
-        linkMessageAddress: "/chartData.json",
+        //link-message接口地址
+        linkMessageAddress: "/HistoryData",
 
         /////////////////////////////
         ///openlayers地图基本配置///
