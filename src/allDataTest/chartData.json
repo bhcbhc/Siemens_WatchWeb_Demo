@@ -1,57 +1,190 @@
 [
   {
-    "siemens": 7,
-    "baidu": 5,
+    "siemens": 117,
+    "baidu": 2.5,
     "date": "00:05"
   },
   {
-    "siemens": 5,
-    "baidu": 4,
+    "siemens": 125,
+    "baidu": 1.4,
     "date": "00:10"
   },
   {
-    "siemens": 10,
-    "baidu": 8,
+    "siemens": 100,
+    "baidu": 2.8,
     "date": "00:15"
   },
   {
-    "siemens": 8,
-    "baidu": 7,
+    "siemens": 128,
+    "baidu": 1.7,
     "date": "00:20"
   },
   {
-    "siemens": 15,
-    "baidu": 10,
+    "siemens": 151,
+    "baidu": 1.0,
     "date": "00:25"
   },
   {
-    "siemens": 18,
-    "baidu": 14,
+    "siemens": 118,
+    "baidu": 1.4,
     "date": "00:30"
   },
   {
-    "siemens": 17,
-    "baidu": 16,
+    "siemens": 171,
+    "baidu": 1.6,
     "date": "00:35"
   },
   {
-    "siemens": 9,
-    "baidu": 10,
+    "siemens": 119,
+    "baidu": 1.0,
     "date": "00:40"
   },
   {
-    "siemens": 17,
-    "baidu": 16,
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },  {
+  "siemens": 119,
+  "baidu": 1.0,
+  "date": "00:40"
+},  {
+  "siemens": 119,
+  "baidu": 1.0,
+  "date": "00:40"
+},
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },  {
+  "siemens": 119,
+  "baidu": 1.0,
+  "date": "00:40"
+},  {
+  "siemens": 119,
+  "baidu": 1.0,
+  "date": "00:40"
+},  {
+  "siemens": 119,
+  "baidu": 1.0,
+  "date": "00:40"
+},  {
+  "siemens": 119,
+  "baidu": 1.0,
+  "date": "00:40"
+},
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },  {
+  "siemens": 119,
+  "baidu": 1.0,
+  "date": "00:40"
+},
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 119,
+    "baidu": 1.0,
+    "date": "00:40"
+  },
+  {
+    "siemens": 117,
+    "baidu": 1.6,
     "date": "00:45"
   },
   {
     "siemens": 17,
-    "baidu": 16,
+    "baidu": 1.6,
     "date": "00:50"
   },
   {
     "siemens": 17,
-    "baidu": 16,
+    "baidu": 1.6,
+    "date": "24:00"
+  },
+  {
+    "siemens": 117,
+    "baidu": 1.6,
     "date": "00:55"
   }
 ]

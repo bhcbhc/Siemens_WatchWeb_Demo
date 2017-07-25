@@ -24,20 +24,12 @@ define(['mapBase', 'initWeb', 'getTree', 'timer'], function (mapBase, initWeb, g
                 field: "siemens",
                 axis: "siemens",
                 name: "Siemens",
-                color: "#26C0C0",
-                tooltip: {
-                    visible: true,
-                    template: "#= dataItem.siemens #"
-                }
+                color: "#26C0C0"
             }, {
                 field: "baidu",
                 axis: "baidu",
                 name: "Baidu",
-                color: "#33CC00",
-                tooltip: {
-                    visible: true,
-                    template: "#= dataItem.baidu #"
-                }
+                color: "#33CC00"
             }],
             categoryAxis: [
                 {
@@ -45,7 +37,8 @@ define(['mapBase', 'initWeb', 'getTree', 'timer'], function (mapBase, initWeb, g
                     majorGridLines: {
                         visible: false
                     },
-                    /*            axisCrossingValue: [0, 20],*/
+    /*                labels:{skip:10,rotation:{angle:-90}},*/
+                    axisCrossingValue: [0, 289],
                     justified: true
                 }
             ],
