@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="src/styles/kendo/kendo.dataviz.min.css" type="text/css"/>
     <link rel="stylesheet" href="src/styles/kendo/kendo.dataviz.default.min.css" type="text/css"/>
 
+    <!--essyUI-->
+    <link href="src/styles/easyui/easyui.css"/>
+
     <link rel="stylesheet" type="text/css" href="src/styles/common/common.css"/>
     <link rel="stylesheet" type="text/css" href="src/styles/basic/navigator.css"/>
     <link rel="stylesheet" href="src/styles/basic/overlay.css"/>
@@ -57,12 +60,62 @@
         <img src="src/images/8_8/arrow_left.png" alt="" width="8" height="8">
     </div>
     <div id="map-container" class="full-height left transition-all-05" style="position: relative">
-        <div id="dash_bord">
-            <div id="monitor1" style="height: 50%;text-align: center">
-                <span class="btn-warning">路口1</span>
+        <div class="historyChart easyui-draggable left" id="container_series1" data-options="onDrag:onDrag">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="chart_selector1" style="position: relative">
+                        <input type="text" data-bind="value:time_series1" id="time_series1" class="form-control"/>
+                        <div class="checkbox-inline">
+                            <input type="checkbox" id="checkbox_series1" class="checkbox-inline" checked="checked"/>
+                            <label for="checkbox_series1">选择当天前24小时</label>
+                        </div>
+                    </div>
+                    <div class="full-width dataChoose" style="height: 40px">
+                        <button class="left backoff" id="backoff_series1" data-bind="click:backoff"></button>
+                        <button class="left advance" id="advance_series1" data-bind="click:advance"></button>
+                        <label class="left" for="currentLink1">LinkId:</label>
+                        <label class="left" id="currentLink1" data-bind="html:linkId_series1"></label>
+                        <button class="right close" id="close_series1" data-bind="click:cloesModel"><span
+                                aria-hidden="true">&times;</span>
+                        </button>
+                        <button type="button" id="getChart_series1" class="btn btn-info btn-sm right"
+                                data-bind="click:getChart"
+                                style="float: right;margin-right: 20px">确认
+                        </button>
+                    </div>
+                    <div id="chart_series1" data-bind="source:series1"></div>
+                </div>
+            </div>
+        </div>
+        <div class="historyChart easyui-draggable left" id="container_series2" data-options="onDrag:onDrag">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="chart_selector2" style="position: relative">
+                        <input type="text" data-bind="value:time_series2" id="time_series2" class="form-control"/>
+                        <div class="checkbox-inline">
+                            <input type="checkbox" id="checkbox_series2" class="checkbox-inline" checked="checked"/>
+                            <label for="checkbox_series2">选择当天前24小时</label>
+                        </div>
+                    </div>
+                    <div class="full-width dataChoose" style="height: 40px">
+                        <button type="button" class=" left backoff" id="backoff_series2" data-bind="click:backoff"></button>
+                        <button type="button" class=" left advance" id="advance_series2" data-bind="click:advance"></button>
+                        <label class="left" for="currentLink2">LinkId:</label>
+                        <label class="left" id="currentLink2" data-bind="html:linkId_series2"></label>
+                        <button class="right close" id="close_series2" data-bind="click:cloesModel"><span
+                                aria-hidden="true">&times;</span>
+                        </button>
+                        <button type="button" id="getChart_series2" class="btn btn-info btn-sm right"
+                                data-bind="click:getChart"
+                                style="float: right;margin-right: 20px">确认
+                        </button>
+                    </div>
+                    <div id="chart_series2" data-bind="source:series2"></div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div class="modal fade" id="login-modal" data-bind="events:{shown.bs.modal:modalShow}" tabindex="-1"
      role="alertdialog" aria-labelledby="loginModalLabel">
@@ -102,8 +155,9 @@
         </div>
     </div>
 </div> <!--login modal div-->
-<div class="modal fade" id="chart-Modal" tabindex="-1" role="alertdialog">
-    <div class="modal-dialog" role="document" style="width: 65%">
+
+<!--<div class="modal fade" id="chart-Modal" tabindex="-1" role="alertdialog">
+    <div class="modal-dialog" role="document" style="width: 35%">
         <div class="modal-content">
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
@@ -119,102 +173,149 @@
                     </button>
                 </div>
                 <div class="full-width" id="dataChoose" style="height: 40px">
-                    <button class="right advance"></button>
-                    <button class="right backoff"></button>
-                    <input class="right" id="data-mode-select"/>
-                    <label class="right" for="data-mode-select">选择时间段</label>
+                    <button class="left backoff"></button>
+                    <button class="left advance"></button>
                 </div>
                 <div id="chart" data-bind="source:series"></div>
             </div>
         </div>
     </div>
+</div>-->
+
+<div class="modal fade" id="chart-history-cycle" tabindex="-1" role="alertdialog">
+    <div class="modal-dialog" role="document" style="width: 45%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                </button>
+                <div id="cycle_date" style="position: relative">
+                    <input type="text" data-bind="value:timeCycleSelect" id="cycle_select" class="form-control"/>
+                    <button type="button" class="btn btn-info btn-sm" data-bind="click:getCycleChart"
+                            style="float: right;margin-right: 20px">确认
+                    </button>
+                </div>
+                <div id="chart-cycle" data-bind="source:seriesCycle"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
+
 <script src="src/libs/openlayersv-4.1.1/ol.js"></script>
-<script src="./AppConfig.js"></script>
+<script src="./AppConfigTest.js"></script>
 <script src="src/libs/jquery/jquery-3.2.1.min.js"></script>
+<script src="src/libs/jquery/jquery.easyui.min.js"></script>
 <script src="src/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <script src="src/libs/kendo/kendo.all.min.js"></script>
 <script data-main="src/app.js" src="src/libs/require/require.js"></script>
 
 <!--template monitor-->
 <script id="max_message" type="text/x-kendo-template">
-    <table class="full-width">
-        <tbody>
-        <tr>
-            <td>编号</td>
-            <td colspan="3">#= data["stream_uid"] #</td>
-            <td>时间</td>
-            <td colspan="3">#= data.time #</td>
-        </tr>
-        <tr>
-            <td>在线/离线</td>
-            <td>#= data.online #</td>
-            <td>方案</td>
-            <td>#= data.plan #</td>
-            <td>状态</td>
-            <td>#= data.state #</td>
-            <td>模式</td>
-            <td>#= data.mode #</td>
-        </tr>
-        <tr>
-            <td>上一阶段</td>
-            <td>#= data["stage_pre"] #</td>
-            <td>上一周期</td>
-            <td>#= data["cycle_pre"] #</td>
-            <td>阶段1</td>
-            <td>#= data["length_pre"].length?data["length_pre"][0]:"" #</td>
-            <td>阶段2</td>
-            <td>#= data["length_pre"].length?data["length_pre"][1] :"" #</td>
-        </tr>
-        <tr>
-            <td>阶段</td>
-            <td>#= data.stage #</td>
-            <td>当前周期</td>
-            <td>#= data.cycle #</td>
-            <td>阶段1</td>
-            <td>#= data["length"].length? data["length"][0]:"" #</td>
-            <td>阶段2</td>
-            <td>#= data["length"].length?data["length"][1]:"" #</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="message-container">
+        <div>
+            <img class="left" src="src/images/siemens/intersections.png"/>
+            <span class="route_span left">路口id #= data["stream_uid"] #</span>
+            <span class="right">X</span>
+            <button class="right">历史周期<span style="display: none">#= data["stream_uid"] #</span></button>
+        </div>
+        <table class="full-width">
+            <tbody>
+            <tr>
+                <td>时间</td>
+                <td></td>
+                <td></td>
+                <td colspan="3">#= data.time #</td>
+            </tr>
+            <tr>
+                <td>在线/离线</td>
+                <td>#= data.online #</td>
+                <td>方案</td>
+                <td>#= data.plan #</td>
+                <td>状态</td>
+                <td>#= data.state #</td>
+                <td>模式</td>
+                <td>#= data.mode #</td>
+            </tr>
+            <tr>
+                <td>上一阶段</td>
+                <td>#= data["stage_pre"] #</td>
+                <td>上一周期</td>
+                <td>#= data["cycle_pre"] #</td>
+                <td>阶段1</td>
+                <td>#= data["length_pre"].length?data["length_pre"][0]:"" #</td>
+                <td>阶段2</td>
+                <td>#= data["length_pre"].length?data["length_pre"][1] :"" #</td>
+            </tr>
+            <tr>
+                <td>阶段</td>
+                <td>#= data.stage #</td>
+                <td>当前周期</td>
+                <td>#= data.cycle #</td>
+                <td>阶段1</td>
+                <td>#= data["length"].length? data["length"][0]:"" #</td>
+                <td>阶段2</td>
+                <td>#= data["length"].length?data["length"][1]:"" #</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </script>
 <script id="min_message" type="text/x-kendo-template">
-    <table>
-        <thead>
-        <tr>
-            <td>#= "编号: "+data["stream_uid"] #</td>
-            # for(var i=0;i< data.moreLength;i++){#
-            <td>
-                #="阶段"+ (i+1) #
-            </td>
-            # } #
-            <td>总周期</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>上一周期</td>
-            # for(var i=0;i< data.moreLength;i++){#
-            <td>
-                #=data["length_pre"][i]? data["length_pre"][i]:""#
-            </td>
-            # } #
-            <td>#= data["cycle_pre"] #</td>
-        </tr>
-        <tr>
-            <td>当前周期</td>
-            # for(var i=0;i< data.moreLength;i++){#
-            <td>
-                #= data["length"][i]?data["length"][i]:"" #
-            </td>
-            # } #
-            <td>#= data.cycle #</td>
-        </tr>
-        </tbody>
+    <div class="message-container">
+        <div>
+            <img class="left" src="src/images/siemens/intersections.png"/>
+            <span class="route_span left">路口id #= data["stream_uid"] #</span>
+            <span class="right">X</span>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                # for(var i=0;i< data.moreLength;i++){#
+                <td>
+                    #="阶段"+ (i+1) #
+                </td>
+                # } #
+                <td>总周期</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>上一周期</td>
+                # for(var i=0;i< data.moreLength;i++){#
+                <td>
+                    #=data["length_pre"][i]? data["length_pre"][i]:""#
+                </td>
+                # } #
+                <td>#= data["cycle_pre"] #</td>
+            </tr>
+            <tr>
+                <td>当前周期</td>
+                # for(var i=0;i< data.moreLength;i++){#
+                <td>
+                    #= data["length"][i]?data["length"][i]:"" #
+                </td>
+                # } #
+                <td>#= data.cycle #</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</script>
 
-    </table>
+<script>
+    function onDrag(e) {
+        var d = e.data;
+        d.left = repair(d.left);
+        d.top = repair(d.top);
+
+        function repair(v) {
+            var r = parseInt(v / 20) * 20;
+            if (Math.abs(v % 20) > 10) {
+                r += v > 0 ? 20 : -20;
+            }
+            return r;
+        }
+    }
 </script>
 </body>
 </html>
