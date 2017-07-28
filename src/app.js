@@ -113,9 +113,8 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
                 templateMax = kendo.template($('#max_message').html());
 
             data.map(function (item) {
-                //坐标转换
-
-                var transformPoint = mapChange.bMapToWGS84([item.coordinate])[0],
+                //坐标转换，这里应用AppConfig.js 文件时要讲transformPoint的值改为注释后面值
+                var transformPoint = item.coordinate,  //mapChange.bMapToWGS84([item.coordinate])[0], //item.coordinate
                     uid = item["stream_uid"];
 
                 //缓存所有points备用
@@ -133,6 +132,9 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
                 var monitorParam = $.extend(markParam, {point: transformPoint, id: "m_" + item["stream_uid"]});
                 allMonitor[uid] = mapBase.createFeature().createMonitor(map, monitorParam);
 
+                //添加点击事件
+                allMonitor[uid].on('click', monitorClick);
+
                 anchorLayer.getSource()
                     .addFeature(allMonitor[uid]);
 
@@ -145,7 +147,7 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
                 });
 
                 allOverLayMinZoom[uid] = new ol.Overlay({
-                    position: mapBase.transformPoint(transformPoint),
+                    // position: mapBase.transformPoint(transformPoint),
                     positioning: "bottom-right"
                 });
 
@@ -160,14 +162,10 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
 
                         setArrowStage(data[0].stage);
 
-
-                        $('#monitor1').find('table').remove();
-                        $('#monitor1').append(templateMax(formatData(data[0])));
-
                         var div = document.createElement('div');
 
                         data.map(function (item) {
-                            var formatedData = formatData(data[0]);
+                            var formatedData = formatData(item);
                             var resultMax = templateMax(formatedData);
                             var resultMin = templateMin(formatedData);
 
@@ -186,6 +184,11 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
                         console.info(error)
                     });
             }, 3000);
+
+            $('.message-container button').on('click', function () {
+                var streamId = $(this).find('span').text();
+                alert(streamId);
+            });
         })
         .catch(function (err) {
             console.info(err);
@@ -232,12 +235,6 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
                 formatedData.mode = data.mode;
         }
 
-        if (data.online) {
-            formatedData.online = "在线";
-        } else {
-            formatedData.online = "离线";
-        }
-
         if (!data.length) {
             data.length = [];
         }
@@ -253,12 +250,26 @@ require(["requestAsync", 'initWeb', 'core', 'mapBase', 'mapUtils'], function (re
 
 
     function getFeatureId() {
-        console.log("当前id:%s,当前坐标:%o", this.getId(), this.getGeometry().getCoordinates());
         var id = this.getId();
-        if (id) {
-            viewModel.set('link_id', id);
-            $('#chart-Modal').modal('show');
+        if (!viewModel.isFirstChartExist) {
+            $('#container_series1').css('display', "block");
+            viewModel.set('linkId_series1', id);
+            viewModel.set('isFirstChartExist', true);
+        } else if (!viewModel.isSecondChartExist) {
+            $('#container_series2').css('display', "block");
+            viewModel.set('linkId_series2', id);
+            viewModel.set('isSecondChartExist', true);
+        } else {
+            viewModel.set('series1', []);
+            viewModel.set('linkId_series1', id);
         }
+    }
+
+    function monitorClick() {
+        var id = this.getId().split('_')[1];
+
+        viewModel.set('cycleRouteId',id);
+        $('#chart-history-cycle').modal('show');
     }
 
 

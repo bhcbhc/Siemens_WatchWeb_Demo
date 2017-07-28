@@ -20,23 +20,23 @@
     "time": "2017-07-12 15:32:00"
   },
   {
-    "stream_uid": "uid2",
-    "mode": 2,
-    "online": false,
-    "plan": "B",
-    "state": "停机",
-    "stage": 2,
-    "stage_pre": 1,
-    "cycle": 60,
-    "cycle_pre": 80,
-    "length": [
-      20,
-      40
-    ],
-    "length_pre": [
-      60,
-      20
-    ],
-    "time": "2017-07-12 15:32:00"
-  }
+  "stream_uid": "uid2",
+  "mode": 2,
+  "online": false,
+  "plan": "B",
+  "state": "停机",
+  "stage": 2,
+  "stage_pre": 1,
+  "cycle": 60,
+  "cycle_pre": 80,
+  "length": [
+    20,
+    40
+  ],
+  "length_pre": [
+    60,
+    20
+  ],
+  "time": "2017-07-12 15:32:00"
+}
 ]

@@ -1,2 +1,0 @@
-﻿[{"id": "cn", "name": "中文", "text": "加载中文页面"},
- {"id": "en", "name": "English", "text": "Reload page in English"}]

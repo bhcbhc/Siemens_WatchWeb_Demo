@@ -138,7 +138,11 @@ body {
   position: fixed;
 }
 
-table{
+td{
+  text-align: center;
+}
+
+/*table{
   opacity: 0.8;
   border-collapse: collapse;
 
@@ -157,7 +161,7 @@ table{
   tbody td{
     background-color: #e8edff;
   }
-}
+}*/
 
 
 #navigation {

@@ -33,7 +33,8 @@ define(function () {
             d.resolve(data);
         }).fail(function (data) {
             d.reject(data);
-        })
+        });
+
         return d.promise();
     }
 

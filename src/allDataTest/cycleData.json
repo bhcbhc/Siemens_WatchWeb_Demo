@@ -1,0 +1,83 @@
+{
+  "stages": 3,
+  "data": [
+    {
+      "time": "00:05",
+      "stage1": 15,
+      "stage2": 40,
+      "stage3": 10
+    },
+    {
+      "time": "00:10",
+      "stage1": 12,
+      "stage2": 10,
+      "stage3": 5
+    },
+    {
+      "time": "00:15",
+      "stage1": 5,
+      "stage2": 20,
+      "stage3": 24
+    },
+    {
+      "time": "00:20",
+      "stage1": 33,
+      "stage2": 30,
+      "stage3": 22
+    },
+    {
+      "time": "00:25",
+      "stage1": 30,
+      "stage2": 30,
+      "stage3": 40
+    },
+    {
+      "time": "00:30",
+      "stage1": 30,
+      "stage2": 30,
+      "stage3": 40
+    },
+    {
+      "time": "00:35",
+      "stage1": 30,
+      "stage2": 30,
+      "stage3": 40
+    },
+    {
+      "time": "00:40",
+      "stage1": 30,
+      "stage2": 24,
+      "stage3": 40
+    },
+    {
+      "time": "00:45",
+      "stage1": 30,
+      "stage2": 40,
+      "stage3": 40
+    },
+    {
+      "time": "00:50",
+      "stage1": 30,
+      "stage2": 30,
+      "stage3": 40
+    },
+    {
+      "time": "00:55",
+      "stage1": 30,
+      "stage2": 30,
+      "stage3": 18
+    },
+    {
+      "time": "01:00",
+      "stage1": 30,
+      "stage2": 28,
+      "stage3": 23
+    },
+    {
+      "time": "01:05",
+      "stage1": 30,
+      "stage2": 10,
+      "stage3": 22
+    }
+  ]
+}
