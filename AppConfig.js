@@ -15,6 +15,9 @@
         //信号机数据接口地址
         monitorAddress: "/StreamData",
 
+        //历史周期接口地址
+        stageAddress:"/StageData",
+
         //获取所有路口id和坐标
         allStreamAddress: "/JunctionList",
 
