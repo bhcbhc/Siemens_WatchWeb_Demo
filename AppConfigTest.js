@@ -19,6 +19,9 @@
         //获取所有路口id和坐标
         allStreamAddress: "/allRoutes.json",
 
+        //历史周期数据
+        stageAddress: "/cycleData.json",
+
         //link-message接口地址
         linkMessageAddress: "/chartData.json",
 
@@ -38,13 +41,13 @@
                     source: new ol.source.XYZ({
                         url: './src/tiles/Wangjing area/{z}/{x}/{y}.png'
                     })
-                })
-                /*                new ol.layer.Tile({
+                })/*,
+                 new ol.layer.Tile({
                  source: new ol.source.TileDebug({
                  projection: 'EPSG:3857',
                  tileGrid: new ol.source.OSM().getTileGrid()
                  })
-                 }) */
+                 })*/
             ],
             view: {
                 //投影设置 4326等同于WGS84坐标系，3857等同于900913墨卡托投影，openlayer web默认为墨卡托
